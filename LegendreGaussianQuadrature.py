@@ -1,5 +1,5 @@
+import math
 from math import *
-
 def sub_division(f,a,b,tol,entire,results):
     #tol: user-defined tolerance
     #total: the integral on the whole interval a,b using above gaussian function
@@ -14,7 +14,7 @@ def sub_division(f,a,b,tol,entire,results):
     if abs(entire-(left+right))<tol * max(abs(entire), (abs(left)+abs(right))):
         results.append(entire)
         return entire
-    x=sub_division(f,a_z,b,tol,right)+sub_division(f,a,b_k,tol,left)
+    x=sub_division(f,a_z,b,tol,right,results)+sub_division(f,a,b_k,tol,left,results)
     results.append(x)
     return x
 
@@ -39,9 +39,9 @@ def adaptive_gaussian_quadrature(f,a,b,tol,results):
     #The function is defined as lambda funtion (view f below).
 
 def main():
-    f = lambda x: 2 * x  # define a function here
+    f = lambda x: math.e**(3*x)  # define a function here
     results = []
-    res=adaptive_gaussian_quadrature(f,-2,1.9, 10 ** (-5),results)
+    res=adaptive_gaussian_quadrature(f,-1,1, 10 ** (-5),results)
     for i in range(len(results)):
         #print(f'-Result number {i}:\nLeft:{results[i][0]}, Entire:{results[i][1]}, Right:{results[i][2]}\n')
         print(f'-Result number {i+1} : {results[i]}')
